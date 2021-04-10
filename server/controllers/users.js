@@ -1,4 +1,5 @@
 import User from '../models/user.js';
+import {  getNextConsecutiveValue } from './consecutives.js'
 
 export const getUsers = async (req, res) => {
     try {
@@ -14,7 +15,13 @@ export const getUsers = async (req, res) => {
 
 export const createUser = async (req, res) => {
     const user = req.body;
-
+    let consecutiveValue;
+    try {
+        consecutiveValue = await getNextConsecutiveValue('Usuarios');
+    } catch (error) {
+        console.log(error.message)
+    }
+    user.code = consecutiveValue;
     const newUser = new User(user);
     try {
         await newUser.save();
