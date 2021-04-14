@@ -6,6 +6,11 @@ import Aux from "../../../hoc/_Aux";
 import Breadcrumb from "../../../App/layout/AdminLayout/Breadcrumb";
 
 class SignUp1 extends React.Component {
+
+    
+
+
+
     render () {
         return(
             <Aux>

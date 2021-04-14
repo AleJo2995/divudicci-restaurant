@@ -2,13 +2,13 @@ export default {
     items: [
         {
             id: 'navigation',
-            title: 'Navigation',
+            title: 'Navegación Principal',
             type: 'group',
             icon: 'icon-navigation',
             children: [
                 {
                     id: 'dashboard',
-                    title: 'Dashboard',
+                    title: 'Inicio',
                     type: 'item',
                     url: '/dashboard/default',
                     icon: 'feather icon-home',
@@ -17,7 +17,7 @@ export default {
         },
         {
             id: 'ui-element',
-            title: 'UI ELEMENT',
+            title: 'MODULOS',
             type: 'group',
             icon: 'icon-ui',
             children: [
@@ -64,7 +64,52 @@ export default {
                             url: '/basic/typography'
                         }
                     ]
+                },
+                {
+                    id: 'basic1',
+                    title: 'Seguridad',
+                    type: 'collapse',
+                    icon: 'feather icon-box',
+                    children: [
+                        {
+                            id: 'button',
+                            title: 'Usuarios',
+                            type: 'item',
+                            url: '/users'
+                        },
+                        {
+                            id: 'badges',
+                            title: 'Roles',
+                            type: 'item',
+                            url: '/basic/badges'
+                        },
+                        {
+                            id: 'breadcrumb-pagination',
+                            title: 'Consecutivos',
+                            type: 'item',
+                            url: '/basic/breadcrumb-paging'
+                        },
+                        {
+                            id: 'collapse',
+                            title: 'Cajas',
+                            type: 'item',
+                            url: '/basic/collapse'
+                        },
+                        {
+                            id: 'tabs-pills',
+                            title: 'Unidades de Medida',
+                            type: 'item',
+                            url: '/basic/tabs-pills'
+                        },
+                        {
+                            id: 'typography',
+                            title: 'Países',
+                            type: 'item',
+                            url: '/basic/typography'
+                        }
+                    ]
                 }
+
             ]
         },
         {

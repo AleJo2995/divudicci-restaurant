@@ -15,8 +15,15 @@ import DEMO from "../../store/constant";
 import avatar1 from '../../assets/images/user/avatar-1.jpg';
 import avatar2 from '../../assets/images/user/avatar-2.jpg';
 import avatar3 from '../../assets/images/user/avatar-3.jpg';
+import { Link, Redirect } from "react-router-dom";
 
 class Dashboard extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = { x: 0, y: 0 };
+    }
+
     render() {
         const tabContent = (
             <Aux>
@@ -98,7 +105,8 @@ class Dashboard extends React.Component {
                                 <div className="row align-items-center justify-content-center card-active">
                                     <div className="col-12">
                                         <OverlayTrigger key={1} overlay={<Tooltip>{'Ingresar'}</Tooltip>}>
-                                            <Button className="col-12" variant={'outline-primary'}><UcFirst text={'Ingresar'} /></Button>
+                                            {/* <Button className="col-12" variant={'outline-primary'}><UcFirst text={'Ingresar'} /></Button> */}
+                                            <Button className="col-12" variant={'outline-primary'}><Link to="/users"> Ingresar </Link></Button>
                                         </OverlayTrigger>
                                     </div>
                                 </div>
