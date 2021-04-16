@@ -5,6 +5,7 @@ const consecutiveSchema = mongoose.Schema({
     type:String,
     description:String,
     initialValue:Number,
+    actualValue:Number,
     hasPrefix:Boolean,
     prefix:String
 });

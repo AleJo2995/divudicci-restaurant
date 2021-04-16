@@ -8,6 +8,8 @@ import Loader from './layout/Loader'
 import Aux from "../hoc/_Aux";
 import ScrollToTop from './layout/ScrollToTop';
 import routes from "../route";
+import ReactNotification from 'react-notifications-component'
+import 'react-notifications-component/dist/theme.css'
 
 const AdminLayout = Loadable({
     loader: () => import('./layout/AdminLayout'),
@@ -31,6 +33,7 @@ class App extends Component {
 
         return (
             <Aux>
+                <ReactNotification />
                 <ScrollToTop>
                     <Suspense fallback={<Loader/>}>
                         <Switch>
