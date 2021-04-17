@@ -4,14 +4,109 @@ import {NavLink} from 'react-router-dom';
 import './../../../assets/scss/style.scss';
 import Aux from "../../../hoc/_Aux";
 import Breadcrumb from "../../../App/layout/AdminLayout/Breadcrumb";
+import config from '../../../config.js';
+import { store } from 'react-notifications-component';
+import {Redirect} from 'react-router';
+
+const axios = require('axios');
+
+const initialState = {
+    configUrl: config.SERVER_URL,
+    username:'',
+    password:'',
+    redirect:false,
+};
 
 class SignUp1 extends React.Component {
 
-    
+    constructor(props) {
+        super(props);
+        this.state = initialState;
+    }
+
+    componentDidMount(){
+    }
+
+    resetState() {
+        this.setState(initialState);
+    }
+
+    validateUserLogin() {
+        const userLogin = {
+            username: this.state.username,
+            password: this.state.password
+        };
+
+        axios.post(this.state.configUrl + '/users/login', userLogin)
+            .then((response) => {   
+
+                if (response.status == 200) {
+                    store.addNotification({
+                        title: "Usuario logueado",
+                        message: "Puede continuar con sus gestiones",
+                        type: "success",
+                        insert: "top",
+                        container: "top-right",
+                        animationIn: ["animate__animated", "animate__fadeIn"],
+                        animationOut: ["animate__animated", "animate__fadeOut"],
+                        dismiss: {
+                          duration: 2000,
+                          onScreen: true
+                        }
+                      });
+                    this.setState({redirect:true});
+                } else if (response.status === 500) {
+                    store.addNotification({
+                        title: "Error al intentar loguear el usuario",
+                        message: "Revise los datos de usuario",
+                        type: "danger",
+                        insert: "top",
+                        container: "top-right",
+                        animationIn: ["animate__animated", "animate__fadeIn"],
+                        animationOut: ["animate__animated", "animate__fadeOut"],
+                        dismiss: {
+                          duration: 3000,
+                          onScreen: true
+                        }
+                      });
+                }
+                
+                    
+
+
+                  }).catch((error) => {
+                    store.addNotification({
+                        title: "Error al intentar loguear el usuario",
+                        message: error.message,
+                        type: "danger",
+                        insert: "top",
+                        container: "top-right",
+                        animationIn: ["animate__animated", "animate__fadeIn"],
+                        animationOut: ["animate__animated", "animate__fadeOut"],
+                        dismiss: {
+                          duration: 3000,
+                          onScreen: true
+                        }
+                      });
+                });
+    }
+
+    handleChange (event) {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+
+        this.setState({
+        [name]: value
+        });
+    }
 
 
 
     render () {
+
+        const {username, password, redirect} = this.state;
+
         return(
             <Aux>
                 <Breadcrumb/>
@@ -28,12 +123,12 @@ class SignUp1 extends React.Component {
                                 <div className="mb-4">
                                     <i className="feather icon-unlock auth-icon"/>
                                 </div>
-                                <h3 className="mb-4">Login</h3>
+                                <h3 className="mb-4">Bienvenido a Divudicci</h3>
                                 <div className="input-group mb-3">
-                                    <input type="email" className="form-control" placeholder="Email"/>
+                                    <input type="email" className="form-control" placeholder="Username" name="username" value={username} onChange={ (e) => this.handleChange(e) }/>
                                 </div>
                                 <div className="input-group mb-4">
-                                    <input type="password" className="form-control" placeholder="password"/>
+                                    <input type="password" className="form-control" placeholder="password" name="password" value={password} onChange={ (e) => this.handleChange(e) }/>
                                 </div>
                                 <div className="form-group text-left">
                                     <div className="checkbox checkbox-fill d-inline">
@@ -41,12 +136,12 @@ class SignUp1 extends React.Component {
                                             <label htmlFor="checkbox-fill-a1" className="cr"> Save credentials</label>
                                     </div>
                                 </div>
-                                <button className="btn btn-primary shadow-2 mb-4">Login</button>
+                                <button className="btn btn-primary shadow-2 mb-4" onClick={() => this.validateUserLogin()}>Login</button>
                                 <p className="mb-2 text-muted">Forgot password? <NavLink to="/auth/reset-password-1">Reset</NavLink></p>
-                                <p className="mb-0 text-muted">Don’t have an account? <NavLink to="/auth/signup-1">Signup</NavLink></p>
                             </div>
                         </div>
                     </div>
+                    {redirect ? <Redirect to='/default/dashboard'/> : null} 
                 </div>
             </Aux>
         );
