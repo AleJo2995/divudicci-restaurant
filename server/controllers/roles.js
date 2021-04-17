@@ -1,40 +1,40 @@
-import User from '../models/user.js';
+import Role from '../models/role.js';
 
-export const getUsers = async (req, res) => {
+export const getRoles = async (req, res) => {
     try {
-        const users = await User.find({}, { _id: 0 });
-        res.status(200).json(users);
+        const roles = await Role.find({}, { _id: 0 });
+        res.status(200).json(roles);
     } catch (error) {
         res.status(404).json({message: error.message})
     }
 }
 
-export const getUserByCode = async (req, res) => {
+export const getRoleByCode = async (req, res) => {
     const query = {code: req.params.code};
     try {
-        const users = await User.findOne(query, { _id: 0 });
-        res.status(200).json(users);
+        const roles = await Role.findOne(query, { _id: 0 });
+        res.status(200).json(roles);
     } catch (error) {
         res.status(404).json({message: error.message})
     }
 }
 
-export const createUser = async (req, res) => {
-    const user = req.body;
-    const newUser = new User(user);
+export const createRole = async (req, res) => {
+    const role = req.body;
+    const newRole = new Role(role);
     try {
-        await newUser.save();
-        res.status(201).json(newUser);
+        await newRole.save();
+        res.status(201).json(newRole);
     } catch (error) {
         res.status(409).json({message: error.message})
     }
 }
 
-export const editUser = async (req, res) => {
+export const editRole = async (req, res) => {
     const query = {'code': req.params.code};
     try {
-        const user = await User.findOneAndUpdate(query, req.body);
-        res.status(200).json(user);
+        const role = await Role.findOneAndUpdate(query, req.body);
+        res.status(200).json(role);
     } catch (error) {
         res.status(409).json({message: error.message})
     }

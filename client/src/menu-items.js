@@ -81,7 +81,7 @@ export default {
                             id: 'badges',
                             title: 'Roles',
                             type: 'item',
-                            url: '/basic/badges'
+                            url: '/roles'
                         },
                         {
                             id: 'breadcrumb-pagination',
@@ -99,13 +99,13 @@ export default {
                             id: 'tabs-pills',
                             title: 'Unidades de Medida',
                             type: 'item',
-                            url: '/basic/tabs-pills'
+                            url: '/unidadesDeMedida'
                         },
                         {
                             id: 'typography',
-                            title: 'Países',
+                            title: 'Administración de Cajas',
                             type: 'item',
-                            url: '/basic/typography'
+                            url: '/cajas'
                         }
                     ]
                 },
@@ -117,39 +117,9 @@ export default {
                     children: [
                         {
                             id: 'button',
-                            title: 'Usuarios',
+                            title: 'Lista de Restaurantes',
                             type: 'item',
-                            url: '/users'
-                        },
-                        {
-                            id: 'badges',
-                            title: 'Roles',
-                            type: 'item',
-                            url: '/basic/badges'
-                        },
-                        {
-                            id: 'breadcrumb-pagination',
-                            title: 'Consecutivos',
-                            type: 'item',
-                            url: '/consecutives'
-                        },
-                        {
-                            id: 'collapse',
-                            title: 'Países',
-                            type: 'item',
-                            url: '/countries'
-                        },
-                        {
-                            id: 'tabs-pills',
-                            title: 'Unidades de Medida',
-                            type: 'item',
-                            url: '/basic/tabs-pills'
-                        },
-                        {
-                            id: 'typography',
-                            title: 'Países',
-                            type: 'item',
-                            url: '/basic/typography'
+                            url: '/restaurants'
                         }
                     ]
                 },
@@ -161,40 +131,40 @@ export default {
                     children: [
                         {
                             id: 'button',
-                            title: 'Usuarios',
+                            title: 'Manejo de clientes',
                             type: 'item',
-                            url: '/users'
+                            url: '/clients'
                         },
-                        {
-                            id: 'badges',
-                            title: 'Roles',
-                            type: 'item',
-                            url: '/basic/badges'
-                        },
-                        {
-                            id: 'breadcrumb-pagination',
-                            title: 'Consecutivos',
-                            type: 'item',
-                            url: '/consecutives'
-                        },
-                        {
-                            id: 'collapse',
-                            title: 'Países',
-                            type: 'item',
-                            url: '/countries'
-                        },
-                        {
-                            id: 'tabs-pills',
-                            title: 'Unidades de Medida',
-                            type: 'item',
-                            url: '/basic/tabs-pills'
-                        },
-                        {
-                            id: 'typography',
-                            title: 'Países',
-                            type: 'item',
-                            url: '/basic/typography'
-                        }
+                        // {
+                        //     id: 'badges',
+                        //     title: 'Roles',
+                        //     type: 'item',
+                        //     url: '/basic/badges'
+                        // },
+                        // {
+                        //     id: 'breadcrumb-pagination',
+                        //     title: 'Consecutivos',
+                        //     type: 'item',
+                        //     url: '/consecutives'
+                        // },
+                        // {
+                        //     id: 'collapse',
+                        //     title: 'Países',
+                        //     type: 'item',
+                        //     url: '/countries'
+                        // },
+                        // {
+                        //     id: 'tabs-pills',
+                        //     title: 'Unidades de Medida',
+                        //     type: 'item',
+                        //     url: '/basic/tabs-pills'
+                        // },
+                        // {
+                        //     id: 'typography',
+                        //     title: 'Países',
+                        //     type: 'item',
+                        //     url: '/basic/typography'
+                        // }
                     ]
                 },
                 {
@@ -257,7 +227,7 @@ export default {
                             id: 'badges',
                             title: 'Roles',
                             type: 'item',
-                            url: '/basic/badges'
+                            url: '/roles'
                         },
                         {
                             id: 'breadcrumb-pagination',

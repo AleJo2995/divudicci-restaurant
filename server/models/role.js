@@ -1,17 +1,11 @@
 import mongoose from 'mongoose';
 
-const userSchema = mongoose.Schema({
+const roleSchema = mongoose.Schema({
     code:String,
-    password:String,
     name:String,
-    lastName:String,
-    secondSurname:String,
-    phoneNumber:String,
-    cellPhoneNumber:String,
-    username:String,
-    roles:[String]
+    description:String
 });
 
-const user = mongoose.model('user', userSchema, 'user');
+const role = mongoose.model('roles', roleSchema, 'roles');
 
-export default user;
+export default role;

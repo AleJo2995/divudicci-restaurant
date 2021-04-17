@@ -25,13 +25,16 @@ const axios = require('axios');
 
 const initialState = {
     configUrl: config.SERVER_URL,
-    nameOfRole: '',
-    description:'',
+    nameOfRestaurant: '',
+    address:'',
+    clientsQuant:'',
+    phoneNumber:'',
+    specialty:'',
     data : [], 
     code: ''
 };
 
-class Roles extends React.Component {
+class Restaurants extends React.Component {
 
     constructor(props) {
         super(props);
@@ -39,15 +42,15 @@ class Roles extends React.Component {
     }
 
     componentDidMount(){
-        this.loadRoles();
+        this.loadRestaurants();
     }
 
     resetState() {
         this.setState(initialState);
     }
 
-    loadRoles() {
-        axios.get( this.state.configUrl + '/roles/')
+    loadRestaurants() {
+        axios.get( this.state.configUrl + '/restaurants/')
             .then((response) => {
                 // handle success
                 this.setState({ data: response.data });
@@ -58,31 +61,34 @@ class Roles extends React.Component {
             })
     }
 
-    createRole() {
-        const newRole = {
-            name: this.state.nameOfRole,
-            description: this.state.description,
+    createRestaurant() {
+        const newRestaurant = {
+            name:this.state.nameOfRestaurant,
+            address:this.state.address,
+            clientsQuant:this.state.clientsQuant,
+            phoneNumber:this.state.phoneNumber,
+            specialty:this.state.specialty
         };
 
-        axios.get(this.state.configUrl + '/consecutives/get/lastConsecutive?code=R-')
+        axios.get(this.state.configUrl + '/consecutives/get/lastConsecutive?code=RES-')
             .then((response) => {
                 // handle success
                 const consecutive = response.data;
                 let updateActualValue = {};
                 if(consecutive.actualValue === undefined || consecutive.actualValue === null){
                     updateActualValue = { actualValue: consecutive.initialValue}
-                    newRole.code = consecutive.code + consecutive.initialValue;
+                    newRestaurant.code = consecutive.code + consecutive.initialValue;
                 } else {
                     updateActualValue = { actualValue: consecutive.actualValue + 1}
-                    newRole.code = consecutive.code + updateActualValue.actualValue;
+                    newRestaurant.code = consecutive.code + updateActualValue.actualValue;
                 }
                 axios.all([
-                    axios.patch(this.state.configUrl + '/consecutives/update/lastConsecutive?code=R-', updateActualValue),
-                    axios.post(this.state.configUrl + '/roles/create', newRole)
+                    axios.patch(this.state.configUrl + '/consecutives/update/lastConsecutive?code=RES-', updateActualValue),
+                    axios.post(this.state.configUrl + '/restaurants/create', newRestaurant)
                   ])
                   .then(responseArr => {
                     store.addNotification({
-                        title: "Rol creado",
+                        title: "Restaurante creado",
                         message: "Puede continuar con sus gestiones",
                         type: "success",
                         insert: "top",
@@ -108,11 +114,11 @@ class Roles extends React.Component {
                         }
                       });
                       this.resetState();
-                      this.loadRoles();
+                      this.loadRestaurants();
 
                   }).catch((error) => {
                     store.addNotification({
-                        title: "Error al crear el rol",
+                        title: "Error al crear el restaurante",
                         message: error.message,
                         type: "danger",
                         insert: "top",
@@ -132,17 +138,20 @@ class Roles extends React.Component {
             })
     }
 
-    editRole(){
-        const newRole = {
-            name: this.state.nameOfRole,
-            description: this.state.description,
+    editRestaurant(){
+        const newRestaurant = {
+            name:this.state.nameOfRestaurant,
+            address:this.state.address,
+            clientsQuant:this.state.clientsQuant,
+            phoneNumber:this.state.phoneNumber,
+            specialty:this.state.specialty
         };
 
-        axios.patch(this.state.configUrl + '/roles/edit/' + this.state.code, newRole)
+        axios.patch(this.state.configUrl + '/restaurants/edit/' + this.state.code, newRestaurant)
             .then((response) => {
                 // handle success
                 store.addNotification({
-                    title: "Rol editado correctamente",
+                    title: "Restaurante editado correctamente",
                     message: "Puede continuar con sus gestiones",
                     type: "success",
                     insert: "top",
@@ -158,13 +167,13 @@ class Roles extends React.Component {
                   this.setState({ 
                     isBasic:false
                   });
-                  this.loadRoles();
+                  this.loadRestaurants();
             })
             .catch((error) => {
                 // handle error
                 console.log(error);
                 store.addNotification({
-                    title: "Rol no encontrado",
+                    title: "Restaurante no encontrado",
                     message: error.message,
                     type: "danger",
                     insert: "top",
@@ -179,12 +188,12 @@ class Roles extends React.Component {
             })
     }
 
-    getRoleByCode (){
-        axios.get(this.state.configUrl + '/roles/getRoleByCode/' + this.state.code)
+    getRestaurantByCode (){
+        axios.get(this.state.configUrl + '/restaurants/getRestaurantByCode/' + this.state.code)
             .then((response) => {
                 // handle success
                 store.addNotification({
-                    title: "Rol encontrado",
+                    title: "Restaurante encontrado",
                     message: "Puede continuar con sus gestiones",
                     type: "success",
                     insert: "top",
@@ -197,16 +206,19 @@ class Roles extends React.Component {
                     }
                   });
                   this.setState({ 
-                      nameOfRole : response.data.name, 
-                      description : response.data.description,
-                      isBasic:true
+                    nameOfRestaurant : response.data.name, 
+                    address : response.data.address,
+                    clientsQuant: response.data.clientsQuant,
+                    specialty: response.data.specialty,
+                    phoneNumber: response.data.phoneNumber,
+                    isBasic:true
                   });
             })
             .catch((error) => {
                 // handle error
                 console.log(error);
                 store.addNotification({
-                    title: "Rol no encontrado",
+                    title: "Restaurante no encontrado",
                     message: error.message,
                     type: "danger",
                     insert: "top",
@@ -232,7 +244,7 @@ class Roles extends React.Component {
     }
 
     render = () => {        
-        const {data, nameOfRole, description, code, isBasic} = this.state;
+        const {data, nameOfRestaurant, address, clientsQuant, phoneNumber, specialty, code, isBasic} = this.state;
         const options = {
             filterType: 'checkbox',
         };
@@ -247,15 +259,39 @@ class Roles extends React.Component {
             },
             {
                 name: "name",
-                label:"Nombre",
+                label:"Nombre del Restaurante",
                 options: {
                  filter: true,
                  sort: false
                 }
             },
             {
-                name: "description",
-                label:"Descripción",
+                name: "address",
+                label:"Dirección",
+                options: {
+                 filter: true,
+                 sort: false
+                }
+            },
+            {
+                name: "clientsQuant",
+                label:"Cantidad de clientes",
+                options: {
+                 filter: true,
+                 sort: false
+                }
+            },
+            {
+                name: "specialty",
+                label:"Especialidad",
+                options: {
+                 filter: true,
+                 sort: false
+                }
+            },
+            {
+                name: "phoneNumber",
+                label:"Telefono Fijo",
                 options: {
                  filter: true,
                  sort: false
@@ -267,57 +303,81 @@ class Roles extends React.Component {
             <Aux>
                 <Row>
                     <Col>
-                        <Card title="Lista de Roles">
+                        <Card title="Lista de Restaurantes">
                             <MUIDataTable
-                            title={"Roles"}
+                            title={"Restaurantes"}
                             data={data}
                             columns={columns}
                             options={options}
                             />
                         </Card>
-                        <h5>Administración de Roles</h5>
+                        <h5>Administración de Restaurantes</h5>
                         <hr/>
                         <Tabs defaultActiveKey="home">
-                            <Tab eventKey="home" title="Crear rol">
+                            <Tab eventKey="home" title="Crear restaurante">
                                 <Form>
                                     <Form.Group controlId="formBasicEmail">
                                         <Form.Label>Nombre</Form.Label>
-                                        <Form.Control type="input" placeholder="Inserte nombre" name="nameOfRole" value={nameOfRole} onChange={ (e) => this.handleChange(e) } />
+                                        <Form.Control type="input" placeholder="Inserte nombre" name="nameOfRestaurant" value={nameOfRestaurant} onChange={ (e) => this.handleChange(e) } />
                                     </Form.Group>
                                     <Form.Group controlId="formBasicEmail">
-                                        <Form.Label>Descripción</Form.Label>
-                                        <Form.Control type="input" placeholder="Inserte la descripción" name="description" value={description} onChange={ (e) => this.handleChange(e) } />
+                                        <Form.Label>Dirección</Form.Label>
+                                        <Form.Control type="input" placeholder="Inserte dirección" name="address" value={address} onChange={ (e) => this.handleChange(e) } />
                                     </Form.Group>
-                                    <Button variant="primary" onClick={() => this.createRole()}>
+                                    <Form.Group controlId="formBasicEmail">
+                                        <Form.Label>Cantidad de clientes</Form.Label>
+                                        <Form.Control type="input" placeholder="Inserte cantidad de clientes" name="clientsQuant" value={clientsQuant} onChange={ (e) => this.handleChange(e) } />
+                                    </Form.Group>
+                                    <Form.Group controlId="formBasicEmail">
+                                        <Form.Label>Teléfono</Form.Label>
+                                        <Form.Control type="input" placeholder="Inserte teléfono" name="phoneNumber" value={phoneNumber} onChange={ (e) => this.handleChange(e) } />
+                                    </Form.Group>
+                                    <Form.Group controlId="formBasicEmail">
+                                        <Form.Label>Especialidad</Form.Label>
+                                        <Form.Control type="input" placeholder="Inserte especialidad" name="specialty" value={specialty} onChange={ (e) => this.handleChange(e) } />
+                                    </Form.Group>
+                                    <Button variant="primary" onClick={() => this.createRestaurant()}>
                                         Crear
                                     </Button>
                                 </Form>
                             </Tab>
-                            <Tab eventKey="profile" title="Editar Rol">
+                            <Tab eventKey="profile" title="Editar Restaurante">
                             <Form>
                                     <Form.Group controlId="formBasicEmail">
                                         <Form.Label>Código</Form.Label>
-                                        <Form.Control type="input" placeholder="Inserte código de rol a editar" name="code" value={code} onChange={ (e) => this.handleChange(e) } />
+                                        <Form.Control type="input" placeholder="Inserte código de restaurante a editar" name="code" value={code} onChange={ (e) => this.handleChange(e) } />
                                     </Form.Group>
-                                    <Button onClick={() => this.getRoleByCode()} aria-controls="basic-collapse" aria-expanded={isBasic}>Buscar rol</Button>
+                                    <Button onClick={() => this.getRestaurantByCode()} aria-controls="basic-collapse" aria-expanded={isBasic}>Buscar restaurante</Button>
                                     <Collapse in={this.state.isBasic}>
                                         <div id="basic-collapse">
-                                                <Form.Group controlId="formBasicEmail">
-                                                <Form.Label>Nombre</Form.Label>
-                                                <Form.Control type="input" placeholder="Inserte nombre" name="nameOfRole" value={nameOfRole} onChange={ (e) => this.handleChange(e) } />
+                                                    <Form.Group controlId="formBasicEmail">
+                                                    <Form.Label>Nombre</Form.Label>
+                                                    <Form.Control type="input" placeholder="Inserte nombre" name="nameOfRestaurant" value={nameOfRestaurant} onChange={ (e) => this.handleChange(e) } />
                                                 </Form.Group>
                                                 <Form.Group controlId="formBasicEmail">
-                                                    <Form.Label>Descripción</Form.Label>
-                                                    <Form.Control type="input" placeholder="Inserte la descripción" name="description" value={description} onChange={ (e) => this.handleChange(e) } />
+                                                    <Form.Label>Dirección</Form.Label>
+                                                    <Form.Control type="input" placeholder="Inserte dirección" name="address" value={address} onChange={ (e) => this.handleChange(e) } />
                                                 </Form.Group>
-                                                <Button variant="primary" onClick={() => this.editRole()}>
+                                                <Form.Group controlId="formBasicEmail">
+                                                    <Form.Label>Cantidad de clientes</Form.Label>
+                                                    <Form.Control type="input" placeholder="Inserte cantidad de clientes" name="clientsQuant" value={clientsQuant} onChange={ (e) => this.handleChange(e) } />
+                                                </Form.Group>
+                                                <Form.Group controlId="formBasicEmail">
+                                                    <Form.Label>Teléfono</Form.Label>
+                                                    <Form.Control type="input" placeholder="Inserte teléfono" name="phoneNumber" value={phoneNumber} onChange={ (e) => this.handleChange(e) } />
+                                                </Form.Group>
+                                                <Form.Group controlId="formBasicEmail">
+                                                    <Form.Label>Especialidad</Form.Label>
+                                                    <Form.Control type="input" placeholder="Inserte especialidad" name="specialty" value={specialty} onChange={ (e) => this.handleChange(e) } />
+                                                </Form.Group>
+                                                <Button variant="primary" onClick={() => this.editRestaurant()}>
                                                     Editar
                                                 </Button>
                                         </div>
                                     </Collapse>
                                 </Form>
                             </Tab>
-                            <Tab disabled={true} eventKey="contact" title="Eliminar Rol">
+                            <Tab disabled={true} eventKey="contact" title="Eliminar Restaurante">
                                 <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel fixie etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr.</p>
                             </Tab>
                         </Tabs>
@@ -329,4 +389,4 @@ class Roles extends React.Component {
     }
 }
 
-export default Roles;
+export default Restaurants;

@@ -11,6 +11,9 @@ const UIBasicButton = React.lazy(() => import('./Demo/UIElements/Basic/Button'))
 const Users = React.lazy(() => import('./Demo/Security/Users'));
 const Consecutives = React.lazy(() => import('./Demo/Security/Consecutives'));
 const Countries = React.lazy(() => import('./Demo/Security/Countries'));
+const Roles = React.lazy(() => import('./Demo/Security/Roles'));
+const Restaurants = React.lazy(() => import('./Demo/Restaurants/Restaurants'));
+const Clients = React.lazy(() => import('./Demo/Clients/Clients'));
 const UIBasicBadges = React.lazy(() => import('./Demo/UIElements/Basic/Badges'));
 const UIBasicBreadcrumbPagination = React.lazy(() => import('./Demo/UIElements/Basic/BreadcrumbPagination'));
 
@@ -46,6 +49,9 @@ const routes = [
     { path: '/users', exact: true, name: 'Users', component: Users },
     { path: '/consecutives', exact: true, name: 'Consecutives', component: Consecutives },
     { path: '/countries', exact: true, name: 'Countries', component: Countries },
+    { path: '/roles', exact: true, name: 'Roles', component: Roles },
+    { path: '/restaurants', exact: true, name: 'Restaurants', component: Restaurants },
+    { path: '/clients', exact: true, name: 'Clients', component: Clients },
 ];
 
 export default routes;
