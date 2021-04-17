@@ -175,40 +175,40 @@ export default {
                     children: [
                         {
                             id: 'button',
-                            title: 'Usuarios',
+                            title: 'Marcas',
                             type: 'item',
-                            url: '/users'
+                            url: '/brands'
                         },
                         {
                             id: 'badges',
-                            title: 'Roles',
+                            title: 'Productos',
                             type: 'item',
-                            url: '/basic/badges'
+                            url: '/products'
                         },
                         {
                             id: 'breadcrumb-pagination',
-                            title: 'Consecutivos',
+                            title: 'Proveedores',
                             type: 'item',
-                            url: '/consecutives'
+                            url: '/providers'
                         },
-                        {
-                            id: 'collapse',
-                            title: 'Países',
-                            type: 'item',
-                            url: '/countries'
-                        },
-                        {
-                            id: 'tabs-pills',
-                            title: 'Unidades de Medida',
-                            type: 'item',
-                            url: '/basic/tabs-pills'
-                        },
-                        {
-                            id: 'typography',
-                            title: 'Países',
-                            type: 'item',
-                            url: '/basic/typography'
-                        }
+                        // {
+                        //     id: 'collapse',
+                        //     title: 'Países',
+                        //     type: 'item',
+                        //     url: '/countries'
+                        // },
+                        // {
+                        //     id: 'tabs-pills',
+                        //     title: 'Unidades de Medida',
+                        //     type: 'item',
+                        //     url: '/basic/tabs-pills'
+                        // },
+                        // {
+                        //     id: 'typography',
+                        //     title: 'Países',
+                        //     type: 'item',
+                        //     url: '/basic/typography'
+                        // }
                     ]
                 },
                 {

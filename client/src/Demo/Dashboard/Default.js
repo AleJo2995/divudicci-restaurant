@@ -178,7 +178,7 @@ class Dashboard extends React.Component {
                                 <div className="row align-items-center justify-content-center card-active">
                                     <div className="col-12">
                                         <OverlayTrigger key={1} overlay={<Tooltip>{'Administrar'}</Tooltip>}>
-                                            <Button className="col-12" variant={'outline-danger'}><UcFirst text={'Administrar'} /></Button>
+                                            <Button className="col-12" variant={'outline-danger'}><Link to="/providers"> Administrar </Link></Button>
                                         </OverlayTrigger>
                                     </div>
                                 </div>
