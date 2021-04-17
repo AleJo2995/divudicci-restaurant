@@ -87,13 +87,13 @@ export default {
                             id: 'breadcrumb-pagination',
                             title: 'Consecutivos',
                             type: 'item',
-                            url: '/basic/breadcrumb-paging'
+                            url: '/consecutives'
                         },
                         {
                             id: 'collapse',
-                            title: 'Cajas',
+                            title: 'Países',
                             type: 'item',
-                            url: '/basic/collapse'
+                            url: '/countries'
                         },
                         {
                             id: 'tabs-pills',

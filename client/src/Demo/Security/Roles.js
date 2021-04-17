@@ -28,6 +28,9 @@ const initialState = {
     nameOfUser: '',
     lastName:'',
     secondSurname:'',
+    phoneNumber:'',
+    cellPhoneNumber:'',
+    username:'',
     password : '',
     roles : [],
     data : [], 
@@ -176,11 +179,11 @@ class Users extends React.Component {
                       onScreen: true
                     }
                   });
+                  this.resetState();
                   this.setState({ 
                     isBasic:false
                   });
                   this.loadUsers();
-                  this.resetState();
             })
             .catch((error) => {
                 // handle error

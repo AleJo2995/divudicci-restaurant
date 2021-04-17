@@ -6,6 +6,7 @@ import cors from 'cors';
 import postRoutes from './routes/posts.js'
 import userRoutes from './routes/users.js'
 import consecutivesRoutes from './routes/consecutives.js'
+import countriesRoutes from './routes/countries.js'
 
 const app = express(); //initializing
 
@@ -16,6 +17,7 @@ app.use(cors());
 app.use('/posts', postRoutes);
 app.use('/users', userRoutes);
 app.use('/consecutives', consecutivesRoutes);
+app.use('/countries', countriesRoutes);
 
 //
 const CONNECTION_URL = 'mongodb+srv://dividucciAdmin:MFMDOmw59AM10gSB@cluster0.fiti5.mongodb.net/Divudicci?retryWrites=true&w=majority'

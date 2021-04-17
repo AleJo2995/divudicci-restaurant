@@ -8,7 +8,9 @@ global.jQuery = $;
 const DashboardDefault = React.lazy(() => import('./Demo/Dashboard/Default'));
 
 const UIBasicButton = React.lazy(() => import('./Demo/UIElements/Basic/Button'));
-const Users = React.lazy(() => import('./Demo/Users/Users'));
+const Users = React.lazy(() => import('./Demo/Security/Users'));
+const Consecutives = React.lazy(() => import('./Demo/Security/Consecutives'));
+const Countries = React.lazy(() => import('./Demo/Security/Countries'));
 const UIBasicBadges = React.lazy(() => import('./Demo/UIElements/Basic/Badges'));
 const UIBasicBreadcrumbPagination = React.lazy(() => import('./Demo/UIElements/Basic/BreadcrumbPagination'));
 
@@ -42,6 +44,8 @@ const routes = [
     { path: '/sample-page', exact: true, name: 'Sample Page', component: OtherSamplePage },
     { path: '/docs', exact: true, name: 'Documentation', component: OtherDocs },
     { path: '/users', exact: true, name: 'Users', component: Users },
+    { path: '/consecutives', exact: true, name: 'Consecutives', component: Consecutives },
+    { path: '/countries', exact: true, name: 'Countries', component: Countries },
 ];
 
 export default routes;
