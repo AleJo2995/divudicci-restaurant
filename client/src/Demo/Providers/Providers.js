@@ -105,8 +105,7 @@ class Providers extends React.Component {
                                 <div className="row align-items-center justify-content-center card-active">
                                     <div className="col-12">
                                         <OverlayTrigger key={1} overlay={<Tooltip>{'Ingresar'}</Tooltip>}>
-                                            {/* <Button className="col-12" variant={'outline-primary'}><UcFirst text={'Ingresar'} /></Button> */}
-                                            <Button className="col-12" variant={'outline-primary'}><Link to="/users"> Ingresar </Link></Button>
+                                            <Button className="col-12" variant={'outline-primary'}><Link to="/brands"> Ingresar </Link></Button>
                                         </OverlayTrigger>
                                     </div>
                                 </div>
@@ -122,7 +121,7 @@ class Providers extends React.Component {
                                     </div>
                                     <div className="col text-right">
                                         <h3>Proveedores</h3>
-                                        <h5><span className="text-muted">Administre sus productos fácilmente</span></h5>
+                                        <h5><span className="text-muted">Administre sus proveedores fácilmente</span></h5>
                                     </div>
                                 </div>
                             </Card.Body>

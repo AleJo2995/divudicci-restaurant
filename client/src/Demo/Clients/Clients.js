@@ -33,7 +33,8 @@ const initialState = {
     date:'',
     restaurant:'',
     data : [], 
-    code: ''
+    code: '',
+    restaurants:[]
 };
 
 class Clients extends React.Component {
@@ -45,10 +46,12 @@ class Clients extends React.Component {
 
     componentDidMount(){
         this.loadClients();
+        this.loadRestaurants();
     }
 
     resetState() {
         this.setState(initialState);
+        this.loadRestaurants();
     }
 
     loadClients() {
@@ -61,6 +64,26 @@ class Clients extends React.Component {
                 // handle error
                 console.log(error);
             })
+    }
+
+    loadRestaurants() {
+        axios.get( this.state.configUrl + '/restaurants/')
+            .then((response) => {
+                // handle success
+                this.setState({ restaurants: response.data });                  
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+    }
+
+    createSelectItems() {
+        let items = [];    
+        this.state.restaurants.forEach((element, i) => {
+            items.push(<option key={i} value={element.name}>{element.name}</option>);  
+        });   
+        return items;
     }
 
     createClient() {
@@ -378,9 +401,7 @@ class Clients extends React.Component {
                                     <Form.Group controlId="formBasicEmail">
                                         <Form.Label>Restaurant</Form.Label>
                                         <Form.Control as="select" placeholder="Elija restaurante" name="restaurant" value={restaurant} onChange={ (e) => this.handleChange(e) }>
-                                            <option value="Piccola Stella">Piccola Stella</option>
-                                            <option value="Turin Anivo">Turin Anivo</option>
-                                            <option value="Notte di Fuoco">Notte di Fuoco</option>
+                                            {this.createSelectItems()}
                                         </Form.Control>
                                     </Form.Group>
                                     <Button variant="primary" onClick={() => this.createClient()}>
@@ -422,9 +443,7 @@ class Clients extends React.Component {
                                                 <Form.Group controlId="formBasicEmail">
                                                     <Form.Label>Restaurant</Form.Label>
                                                     <Form.Control as="select" placeholder="Elija restaurante" name="restaurant" value={restaurant} onChange={ (e) => this.handleChange(e) }>
-                                                        <option>Piccola Stella</option>
-                                                        <option>Turin Anivo</option>
-                                                        <option>Notte di Fuoco</option>
+                                                        {this.createSelectItems()}
                                                     </Form.Control>
                                                 </Form.Group>
                                             <Button variant="primary" onClick={() => this.editClient()}>

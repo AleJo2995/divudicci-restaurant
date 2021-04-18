@@ -10,6 +10,7 @@ import consecutivesRoutes from './routes/consecutives.js'
 import countriesRoutes from './routes/countries.js'
 import restaurantRoutes from './routes/restaurants.js'
 import clientRoutes from './routes/clients.js'
+import brandsRoutes from './routes/brands.js'
 
 const app = express(); //initializing
 
@@ -24,6 +25,7 @@ app.use('/countries', countriesRoutes);
 app.use('/roles', rolesRoutes);
 app.use('/restaurants', restaurantRoutes);
 app.use('/clients', clientRoutes);
+app.use('/brands', brandsRoutes);
 
 //
 const CONNECTION_URL = 'mongodb+srv://dividucciAdmin:MFMDOmw59AM10gSB@cluster0.fiti5.mongodb.net/Divudicci?retryWrites=true&w=majority'

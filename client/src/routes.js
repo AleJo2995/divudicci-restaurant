@@ -13,6 +13,7 @@ const Consecutives = React.lazy(() => import('./Demo/Security/Consecutives'));
 const Countries = React.lazy(() => import('./Demo/Security/Countries'));
 const Roles = React.lazy(() => import('./Demo/Security/Roles'));
 const Restaurants = React.lazy(() => import('./Demo/Restaurants/Restaurants'));
+const Brands = React.lazy(() => import('./Demo/Providers/Brands'));
 const Providers = React.lazy(() => import('./Demo/Providers/Providers'));
 const Clients = React.lazy(() => import('./Demo/Clients/Clients'));
 const UIBasicBadges = React.lazy(() => import('./Demo/UIElements/Basic/Badges'));
@@ -54,6 +55,7 @@ const routes = [
     { path: '/restaurants', exact: true, name: 'Restaurants', component: Restaurants },
     { path: '/clients', exact: true, name: 'Clients', component: Clients },
     { path: '/providers', exact: true, name: 'Providers', component: Providers },
+    { path: '/brands', exact: true, name: 'Brands', component: Brands },
 ];
 
 export default routes;

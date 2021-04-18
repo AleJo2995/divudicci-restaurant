@@ -3,9 +3,6 @@ import Consecutive from '../models/consecutive.js';
 export const getConsecutives = async (req, res) => {
     try {
         const consecutives = await Consecutive.find();
-
-        console.log(consecutives);
-
         res.status(200).json(consecutives);
     } catch (error) {
         res.status(404).json({message: error.message})
