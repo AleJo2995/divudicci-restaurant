@@ -225,9 +225,9 @@ export default {
                     children: [
                         {
                             id: 'button',
-                            title: 'Usuarios',
+                            title: 'Buffet',
                             type: 'item',
-                            url: '/users'
+                            url: '/administration/buffet'
                         },
                         {
                             id: 'badges',

@@ -15,6 +15,7 @@ const Roles = React.lazy(() => import('./Demo/Security/Roles'));
 const UnitsOfMeasure = React.lazy(() => import('./Demo/Security/UnitsOfMeasure'));
 const Restaurants = React.lazy(() => import('./Demo/Restaurants/Restaurants'));
 const Home = React.lazy(() => import('./Demo/Restaurants/Home'));
+const Buffet = React.lazy(() => import('./Demo/Administration/Buffet'));
 const Console = React.lazy(() => import('./Demo/Restaurants/Console'));
 const Brands = React.lazy(() => import('./Demo/Providers/Brands'));
 const Providers = React.lazy(() => import('./Demo/Providers/Providers'));
@@ -62,6 +63,7 @@ const routes = [
     { path: '/unitsOfMeasure', exact: true, name: 'UnitsOfMeasure', component: UnitsOfMeasure },
     { path: '/restaurants/home', exact: true, name: 'Home', component: Home },
     { path: '/restaurants/console', exact: true, name: 'Console', component: Console },
+    { path: '/administration/buffet', exact: true, name: 'Buffet', component: Buffet },
 ];
 
 export default routes;

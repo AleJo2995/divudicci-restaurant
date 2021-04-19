@@ -46,19 +46,12 @@ class Users extends React.Component {
 
     componentDidMount(){
         this.loadUsers();
+        this.loadRoles();
     }
 
     resetState() {
         this.setState(initialState);
     }
-
-    // convertToExpectedFormat(data){
-    //     let formattedData = [];
-    //     data.forEach(element => {
-    //         formattedData.push(Object.values(element));
-    //     });
-    //     return formattedData;
-    // }
 
     loadUsers() {
         axios.get( this.state.configUrl + '/users/')
@@ -70,6 +63,26 @@ class Users extends React.Component {
                 // handle error
                 console.log(error);
             })
+    }
+
+    loadRoles() {
+        axios.get( this.state.configUrl + '/roles/')
+            .then((response) => {
+                // handle success
+                this.setState({ roles: response.data });
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+    }
+
+    createCheckItems() {
+        let items = [];    
+        this.state.roles.forEach((element, i) => {
+            items.push(<Form.Check id={i} lg={3} md={3} type="checkbox" onChange={ (e) => this.handleChange(e) } name={element.name} label={element.name} checked={false}/>);  
+        });   
+        return items;
     }
 
     createUser() {
@@ -384,10 +397,7 @@ class Users extends React.Component {
                                         <Form.Control type="password" placeholder="Inserte la contraseña deseada" name="password" value={password} onChange={ (e) => this.handleChange(e) } />
                                     </Form.Group>
                                     <Form.Group controlId="formBasicChecbox">
-                                        <Form.Check lg={3} md={3} type="checkbox" label="Role 1"/>
-                                        <Form.Check lg={3} md={3} type="checkbox" label="Role 2"/>
-                                        <Form.Check lg={3} md={3} type="checkbox" label="Role 3"/>
-                                        <Form.Check lg={3} md={3} type="checkbox" label="Role 4"/>
+                                        {this.createCheckItems()}
                                     </Form.Group>
                                     <Button variant="primary" onClick={() => this.createUser()}>
                                         Crear
@@ -432,10 +442,7 @@ class Users extends React.Component {
                                                     <Form.Control type="password" placeholder="Inserte la contraseña deseada" name="password" value={password} onChange={ (e) => this.handleChange(e) } />
                                                 </Form.Group>
                                                 <Form.Group controlId="formBasicChecbox">
-                                                    <Form.Check lg={3} md={3} type="checkbox" label="Role 1"/>
-                                                    <Form.Check lg={3} md={3} type="checkbox" label="Role 2"/>
-                                                    <Form.Check lg={3} md={3} type="checkbox" label="Role 3"/>
-                                                    <Form.Check lg={3} md={3} type="checkbox" label="Role 4"/>
+                                                    {this.createCheckItems()}
                                                 </Form.Group>
                                                 <Button variant="primary" onClick={() => this.editUser()}>
                                                     Editar
