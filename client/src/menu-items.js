@@ -99,13 +99,13 @@ export default {
                             id: 'tabs-pills',
                             title: 'Unidades de Medida',
                             type: 'item',
-                            url: '/unidadesDeMedida'
+                            url: '/unitsOfMeasure'
                         },
                         {
                             id: 'typography',
                             title: 'Administración de Cajas',
                             type: 'item',
-                            url: '/cajas'
+                            url: '/cashiers'
                         }
                     ]
                 },
@@ -115,6 +115,12 @@ export default {
                     type: 'collapse',
                     icon: 'feather icon-box',
                     children: [
+                        {
+                            id: 'button',
+                            title: 'Principal',
+                            type: 'item',
+                            url: '/restaurants/home'
+                        },
                         {
                             id: 'button',
                             title: 'Lista de Restaurantes',

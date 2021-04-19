@@ -334,7 +334,7 @@ class Clients extends React.Component {
                  sort: false,
                  customBodyRender: (value, tableMeta, updateValue) => (
                     <div>
-                        <Form.Control disabled={true}  type="checkbox" name="reservation" checked={value} value={value.toString()}/>
+                        <Form.Control disabled={true}  type="checkbox" name="reservation" checked={value} value={value}/>
                     </div>
                     
                   ),

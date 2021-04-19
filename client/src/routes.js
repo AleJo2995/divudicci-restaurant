@@ -12,7 +12,10 @@ const Users = React.lazy(() => import('./Demo/Security/Users'));
 const Consecutives = React.lazy(() => import('./Demo/Security/Consecutives'));
 const Countries = React.lazy(() => import('./Demo/Security/Countries'));
 const Roles = React.lazy(() => import('./Demo/Security/Roles'));
+const UnitsOfMeasure = React.lazy(() => import('./Demo/Security/UnitsOfMeasure'));
 const Restaurants = React.lazy(() => import('./Demo/Restaurants/Restaurants'));
+const Home = React.lazy(() => import('./Demo/Restaurants/Home'));
+const Console = React.lazy(() => import('./Demo/Restaurants/Console'));
 const Brands = React.lazy(() => import('./Demo/Providers/Brands'));
 const Providers = React.lazy(() => import('./Demo/Providers/Providers'));
 const Clients = React.lazy(() => import('./Demo/Clients/Clients'));
@@ -56,6 +59,9 @@ const routes = [
     { path: '/clients', exact: true, name: 'Clients', component: Clients },
     { path: '/providers', exact: true, name: 'Providers', component: Providers },
     { path: '/brands', exact: true, name: 'Brands', component: Brands },
+    { path: '/unitsOfMeasure', exact: true, name: 'UnitsOfMeasure', component: UnitsOfMeasure },
+    { path: '/restaurants/home', exact: true, name: 'Home', component: Home },
+    { path: '/restaurants/console', exact: true, name: 'Console', component: Console },
 ];
 
 export default routes;

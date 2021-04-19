@@ -5,12 +5,6 @@ import {
     Tabs, Tab,
     Button,
     Form,
-    OverlayTrigger,
-    Tooltip,
-    ButtonToolbar,
-    Dropdown,
-    DropdownButton,
-    SplitButton,
     Collapse
 } from 'react-bootstrap';
 
@@ -25,17 +19,16 @@ const axios = require('axios');
 
 const initialState = {
     configUrl: config.SERVER_URL,
-    nameOfRestaurant: '',
-    address:'',
-    clientsQuant:'',
-    phoneNumber:'',
-    specialty:'',
-    data : [], 
-    active:false,
+    unitOfMeasureName: '',
+    scale: '',
+    detail: '',
+    symbol: '',
+    isBasic: false,
+    data : [],
     code: ''
 };
 
-class Restaurants extends React.Component {
+class UnitsOfMeasure extends React.Component {
 
     constructor(props) {
         super(props);
@@ -43,15 +36,15 @@ class Restaurants extends React.Component {
     }
 
     componentDidMount(){
-        this.loadRestaurants();
+        this.loadUnitsOfMeasure();
     }
 
     resetState() {
         this.setState(initialState);
     }
 
-    loadRestaurants() {
-        axios.get( this.state.configUrl + '/restaurants/')
+    loadUnitsOfMeasure() {
+        axios.get( this.state.configUrl + '/unitsOfMeasure/')
             .then((response) => {
                 // handle success
                 this.setState({ data: response.data });
@@ -62,35 +55,33 @@ class Restaurants extends React.Component {
             })
     }
 
-    createRestaurant() {
-        const newRestaurant = {
-            name:this.state.nameOfRestaurant,
-            address:this.state.address,
-            clientsQuant:this.state.clientsQuant,
-            phoneNumber:this.state.phoneNumber,
-            specialty:this.state.specialty,
-            active: this.state.active
+    createUnitOfMeasure() {
+        const newUnitOfMeasure = {
+            name: this.state.unitOfMeasureName,
+            scale: this.state.scale,
+            detail: this.state.detail,
+            symbol: this.state.symbol
         };
 
-        axios.get(this.state.configUrl + '/consecutives/get/lastConsecutive?code=RES-')
+        axios.get(this.state.configUrl + '/consecutives/get/lastConsecutive?code=UM-')
             .then((response) => {
                 // handle success
                 const consecutive = response.data;
                 let updateActualValue = {};
                 if(consecutive.actualValue === undefined || consecutive.actualValue === null){
                     updateActualValue = { actualValue: consecutive.initialValue}
-                    newRestaurant.code = consecutive.code + consecutive.initialValue;
+                    newUnitOfMeasure.code = consecutive.code + consecutive.initialValue;
                 } else {
                     updateActualValue = { actualValue: consecutive.actualValue + 1}
-                    newRestaurant.code = consecutive.code + updateActualValue.actualValue;
+                    newUnitOfMeasure.code = consecutive.code + updateActualValue.actualValue;
                 }
                 axios.all([
-                    axios.patch(this.state.configUrl + '/consecutives/update/lastConsecutive?code=RES-', updateActualValue),
-                    axios.post(this.state.configUrl + '/restaurants/create', newRestaurant)
+                    axios.patch(this.state.configUrl + '/consecutives/update/lastConsecutive?code=UM-', updateActualValue),
+                    axios.post(this.state.configUrl + '/unitsOfMeasure/create', newUnitOfMeasure)
                   ])
                   .then(responseArr => {
                     store.addNotification({
-                        title: "Restaurante creado",
+                        title: "Unidad de Medida creado",
                         message: "Puede continuar con sus gestiones",
                         type: "success",
                         insert: "top",
@@ -103,7 +94,7 @@ class Restaurants extends React.Component {
                         }
                       });
                       store.addNotification({
-                        title: "Nuevo consecutivo generado",
+                        title: "Nuevo Consecutivo generado",
                         message: "Puede continuar con sus gestiones",
                         type: "info",
                         insert: "top",
@@ -116,11 +107,11 @@ class Restaurants extends React.Component {
                         }
                       });
                       this.resetState();
-                      this.loadRestaurants();
+                      this.loadUnitsOfMeasure();
 
                   }).catch((error) => {
                     store.addNotification({
-                        title: "Error al crear el restaurante",
+                        title: "Error al crear el unidad de Medida",
                         message: error.message,
                         type: "danger",
                         insert: "top",
@@ -140,21 +131,19 @@ class Restaurants extends React.Component {
             })
     }
 
-    editRestaurant(){
-        const newRestaurant = {
-            name:this.state.nameOfRestaurant,
-            address:this.state.address,
-            clientsQuant:this.state.clientsQuant,
-            phoneNumber:this.state.phoneNumber,
-            specialty:this.state.specialty,
-            active: this.state.active
+    editUnitOfMeasure(){
+        const newUnitOfMeasure = {
+            name: this.state.unitOfMeasureName,
+            scale: this.state.scale,
+            detail: this.state.detail,
+            symbol: this.state.symbol
         };
 
-        axios.patch(this.state.configUrl + '/restaurants/edit/' + this.state.code, newRestaurant)
+        axios.patch(this.state.configUrl + '/unitsOfMeasure/edit/' + this.state.code, newUnitOfMeasure)
             .then((response) => {
                 // handle success
                 store.addNotification({
-                    title: "Restaurante editado correctamente",
+                    title: "Unidad de Medida editado correctamente",
                     message: "Puede continuar con sus gestiones",
                     type: "success",
                     insert: "top",
@@ -170,13 +159,13 @@ class Restaurants extends React.Component {
                   this.setState({ 
                     isBasic:false
                   });
-                  this.loadRestaurants();
+                  this.loadUnitsOfMeasure();
             })
             .catch((error) => {
                 // handle error
                 console.log(error);
                 store.addNotification({
-                    title: "Restaurante no encontrado",
+                    title: "Unidad de Medida no encontrado",
                     message: error.message,
                     type: "danger",
                     insert: "top",
@@ -191,12 +180,12 @@ class Restaurants extends React.Component {
             })
     }
 
-    getRestaurantByCode (){
-        axios.get(this.state.configUrl + '/restaurants/getRestaurantByCode/' + this.state.code)
+    getUnitOfMeasureByCode (){
+        axios.get(this.state.configUrl + '/unitsOfMeasure/getUnitOfMeasureByCode/' + this.state.code)
             .then((response) => {
                 // handle success
                 store.addNotification({
-                    title: "Restaurante encontrado",
+                    title: "Unidad de Medida encontrado",
                     message: "Puede continuar con sus gestiones",
                     type: "success",
                     insert: "top",
@@ -209,20 +198,18 @@ class Restaurants extends React.Component {
                     }
                   });
                   this.setState({ 
-                    nameOfRestaurant : response.data.name, 
-                    address : response.data.address,
-                    clientsQuant: response.data.clientsQuant,
-                    specialty: response.data.specialty,
-                    phoneNumber: response.data.phoneNumber,
-                    active: response.data.active,
-                    isBasic:true
+                        unitOfMeasureName : response.data.name,
+                        symbol: response.data.symbol,
+                        scale: response.data.scale,
+                        detail: response.data.detail,
+                        isBasic:true
                   });
             })
             .catch((error) => {
                 // handle error
                 console.log(error);
                 store.addNotification({
-                    title: "Restaurante no encontrado",
+                    title: "Unidad de Medida no encontrado",
                     message: error.message,
                     type: "danger",
                     insert: "top",
@@ -248,7 +235,7 @@ class Restaurants extends React.Component {
     }
 
     render = () => {        
-        const {data, nameOfRestaurant, address, clientsQuant, phoneNumber, specialty, active, code, isBasic} = this.state;
+        const {data, unitOfMeasureName, isBasic, scale, symbol, detail, code} = this.state;
         const options = {
             filterType: 'checkbox',
         };
@@ -263,56 +250,34 @@ class Restaurants extends React.Component {
             },
             {
                 name: "name",
-                label:"Nombre del Restaurante",
+                label:"Nombre",
                 options: {
                  filter: true,
                  sort: false
                 }
             },
             {
-                name: "address",
-                label:"Dirección",
+                name: "scale",
+                label:"Escala",
                 options: {
                  filter: true,
                  sort: false
                 }
             },
             {
-                name: "clientsQuant",
-                label:"Cantidad de clientes",
+                name: "symbol",
+                label:"Símbolo",
                 options: {
                  filter: true,
                  sort: false
                 }
             },
             {
-                name: "specialty",
-                label:"Especialidad",
+                name: "detail",
+                label:"Detalle",
                 options: {
                  filter: true,
                  sort: false
-                }
-            },
-            {
-                name: "phoneNumber",
-                label:"Telefono Fijo",
-                options: {
-                 filter: true,
-                 sort: false
-                }
-            },
-            {
-                name: "active",
-                label:"Activo",
-                options: {
-                 filter: true,
-                 sort: false,
-                 customBodyRender: (value, tableMeta, updateValue) => (
-                    <div>
-                        <Form.Control disabled={true}  type="checkbox" name="reservation" checked={value} value={value}/>
-                    </div>
-                    
-                  ),
                 }
             }
         ];
@@ -321,89 +286,109 @@ class Restaurants extends React.Component {
             <Aux>
                 <Row>
                     <Col>
-                        <Card title="Lista de Restaurantes">
+                        <Card title="Lista de Unidades de Medida">
                             <MUIDataTable
-                            title={"Restaurantes"}
+                            title={"Unidades de Medida"}
                             data={data}
                             columns={columns}
                             options={options}
                             />
                         </Card>
-                        <h5>Administración de Restaurantes</h5>
+                        <h5>Administración de Unidades de Medida</h5>
                         <hr/>
                         <Tabs defaultActiveKey="home">
-                            <Tab eventKey="home" title="Crear restaurante">
+                            <Tab eventKey="home" title="Crear Unidad de Medida">
                                 <Form>
                                     <Form.Group controlId="formBasicEmail">
                                         <Form.Label>Nombre</Form.Label>
-                                        <Form.Control type="input" placeholder="Inserte nombre" name="nameOfRestaurant" value={nameOfRestaurant} onChange={ (e) => this.handleChange(e) } />
+                                        <Form.Control type="input" placeholder="Inserte nombre del unidad de Medida" name="unitOfMeasureName" value={unitOfMeasureName} onChange={ (e) => this.handleChange(e) } />
                                     </Form.Group>
                                     <Form.Group controlId="formBasicEmail">
-                                        <Form.Label>Dirección</Form.Label>
-                                        <Form.Control type="input" placeholder="Inserte dirección" name="address" value={address} onChange={ (e) => this.handleChange(e) } />
+                                        <Form.Label>Escala</Form.Label>
+                                        <Form.Control as="select" placeholder="Elija escala" name="scale" value={scale !== '' ? scale : 'Escala Genérica'  } onChange={ (e) => this.handleChange(e) }>
+                                            <option>Escala Genérica</option>
+                                        </Form.Control>
                                     </Form.Group>
                                     <Form.Group controlId="formBasicEmail">
-                                        <Form.Label>Cantidad de clientes</Form.Label>
-                                        <Form.Control type="input" placeholder="Inserte cantidad de clientes" name="clientsQuant" value={clientsQuant} onChange={ (e) => this.handleChange(e) } />
+                                        <Form.Label>Detalle</Form.Label>
+                                        <Form.Control as="select" placeholder="Elija detalle" name="detail" value={detail} onChange={ (e) => this.handleChange(e) }>
+                                        <option>Unidades de capacidad</option>
+                                        <option>Unidades de densidad</option>
+                                        <option>Unidades de energía</option>
+                                        <option>Unidades de fuerza</option>
+                                        <option>Unidades de longitud</option>
+                                        <option>Unidades de masa</option>
+                                        <option>Unidades de peso específico</option>
+                                        <option>Unidades de potencia</option>
+                                        <option>Unidades de superficie</option>
+                                        <option>Unidades de temperatura</option>
+                                        <option>Unidades de tiempo</option>
+                                        <option>Unidades de velocidad</option>
+                                        <option>Unidades de viscosidad</option>
+                                        <option>Unidades de volumen</option>
+                                        <option>Unidades eléctricas</option>
+                                        </Form.Control>
                                     </Form.Group>
                                     <Form.Group controlId="formBasicEmail">
-                                        <Form.Label>Teléfono</Form.Label>
-                                        <Form.Control type="input" placeholder="Inserte teléfono" name="phoneNumber" value={phoneNumber} onChange={ (e) => this.handleChange(e) } />
+                                        <Form.Label>Símbolo</Form.Label>
+                                        <Form.Control type="input" placeholder="Inserte símbolo" name="symbol" value={symbol} onChange={ (e) => this.handleChange(e) } />
                                     </Form.Group>
-                                    <Form.Group controlId="formBasicEmail">
-                                        <Form.Label>Activo</Form.Label>
-                                        <Form.Control type="checkbox" placeholder="" name="active" checked={active} onChange={ (e) => this.handleChange(e) } />
-                                    </Form.Group>
-                                    <Form.Group controlId="formBasicEmail">
-                                        <Form.Label>Especialidad</Form.Label>
-                                        <Form.Control type="input" placeholder="Inserte especialidad" name="specialty" value={specialty} onChange={ (e) => this.handleChange(e) } />
-                                    </Form.Group>
-                                    <Button variant="primary" onClick={() => this.createRestaurant()}>
+                                    <Button variant="primary" onClick={() => this.createUnitOfMeasure()}>
                                         Crear
                                     </Button>
                                 </Form>
                             </Tab>
-                            <Tab eventKey="profile" title="Editar Restaurante">
+                            <Tab eventKey="profile" title="Editar Unidad de Medida">
                             <Form>
                                     <Form.Group controlId="formBasicEmail">
                                         <Form.Label>Código</Form.Label>
-                                        <Form.Control type="input" placeholder="Inserte código de restaurante a editar" name="code" value={code} onChange={ (e) => this.handleChange(e) } />
+                                        <Form.Control type="input" placeholder="Inserte código de unidad de Medida a editar" name="code" value={code} onChange={ (e) => this.handleChange(e) } />
                                     </Form.Group>
-                                    <Button onClick={() => this.getRestaurantByCode()} aria-controls="basic-collapse" aria-expanded={isBasic}>Buscar restaurante</Button>
+                                    <Button onClick={() => this.getUnitOfMeasureByCode()} aria-controls="basic-collapse" aria-expanded={isBasic}>Buscar Unidad de Medida</Button>
                                     <Collapse in={this.state.isBasic}>
                                         <div id="basic-collapse">
-                                                    <Form.Group controlId="formBasicEmail">
-                                                    <Form.Label>Nombre</Form.Label>
-                                                    <Form.Control type="input" placeholder="Inserte nombre" name="nameOfRestaurant" value={nameOfRestaurant} onChange={ (e) => this.handleChange(e) } />
-                                                </Form.Group>
-                                                <Form.Group controlId="formBasicEmail">
-                                                    <Form.Label>Dirección</Form.Label>
-                                                    <Form.Control type="input" placeholder="Inserte dirección" name="address" value={address} onChange={ (e) => this.handleChange(e) } />
-                                                </Form.Group>
-                                                <Form.Group controlId="formBasicEmail">
-                                                    <Form.Label>Cantidad de clientes</Form.Label>
-                                                    <Form.Control type="input" placeholder="Inserte cantidad de clientes" name="clientsQuant" value={clientsQuant} onChange={ (e) => this.handleChange(e) } />
-                                                </Form.Group>
-                                                <Form.Group controlId="formBasicEmail">
-                                                    <Form.Label>Teléfono</Form.Label>
-                                                    <Form.Control type="input" placeholder="Inserte teléfono" name="phoneNumber" value={phoneNumber} onChange={ (e) => this.handleChange(e) } />
-                                                </Form.Group>
-                                                <Form.Group controlId="formBasicEmail">
-                                                    <Form.Label>Activo</Form.Label>
-                                                    <Form.Control type="checkbox" placeholder="" name="active" checked={active} onChange={ (e) => this.handleChange(e) } />
-                                                </Form.Group>
-                                                <Form.Group controlId="formBasicEmail">
-                                                    <Form.Label>Especialidad</Form.Label>
-                                                    <Form.Control type="input" placeholder="Inserte especialidad" name="specialty" value={specialty} onChange={ (e) => this.handleChange(e) } />
-                                                </Form.Group>
-                                                <Button variant="primary" onClick={() => this.editRestaurant()}>
-                                                    Editar
-                                                </Button>
+                                        <Form.Group controlId="formBasicEmail">
+                                        <Form.Label>Nombre</Form.Label>
+                                        <Form.Control type="input" placeholder="Inserte nombre del unidad de Medida" name="unitOfMeasureName" value={unitOfMeasureName} onChange={ (e) => this.handleChange(e) } />
+                                            </Form.Group>
+                                            <Form.Group controlId="formBasicEmail">
+                                                <Form.Label>Escala</Form.Label>
+                                                <Form.Control as="select" placeholder="Elija escala" name="scale" value={scale !== '' ? scale : 'Escala Genérica'  } onChange={ (e) => this.handleChange(e) }>
+                                                    <option>Escala Genérica</option>
+                                                </Form.Control>
+                                            </Form.Group>
+                                            <Form.Group controlId="formBasicEmail">
+                                                <Form.Label>Detalle</Form.Label>
+                                                <Form.Control as="select" placeholder="Elija detalle" name="detail" value={detail} onChange={ (e) => this.handleChange(e) }>
+                                                <option>Unidades de capacidad</option>
+                                                <option>Unidades de densidad</option>
+                                                <option>Unidades de energía</option>
+                                                <option>Unidades de fuerza</option>
+                                                <option>Unidades de longitud</option>
+                                                <option>Unidades de masa</option>
+                                                <option>Unidades de peso específico</option>
+                                                <option>Unidades de potencia</option>
+                                                <option>Unidades de superficie</option>
+                                                <option>Unidades de temperatura</option>
+                                                <option>Unidades de tiempo</option>
+                                                <option>Unidades de velocidad</option>
+                                                <option>Unidades de viscosidad</option>
+                                                <option>Unidades de volumen</option>
+                                                <option>Unidades eléctricas</option>
+                                                </Form.Control>
+                                            </Form.Group>
+                                            <Form.Group controlId="formBasicEmail">
+                                                <Form.Label>Símbolo</Form.Label>
+                                                <Form.Control type="input" placeholder="Inserte símbolo" name="symbol" value={symbol} onChange={ (e) => this.handleChange(e) } />
+                                            </Form.Group>
+                                        <Button variant="primary" onClick={() => this.editUnitOfMeasure()}>
+                                            Editar
+                                        </Button>
                                         </div>
                                     </Collapse>
                                 </Form>
                             </Tab>
-                            <Tab disabled={true} eventKey="contact" title="Eliminar Restaurante">
+                            <Tab disabled={true} eventKey="contact" title="Eliminar Unidad de Medida">
                                 <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel fixie etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr.</p>
                             </Tab>
                         </Tabs>
@@ -415,4 +400,4 @@ class Restaurants extends React.Component {
     }
 }
 
-export default Restaurants;
+export default UnitsOfMeasure;

@@ -11,6 +11,7 @@ import countriesRoutes from './routes/countries.js'
 import restaurantRoutes from './routes/restaurants.js'
 import clientRoutes from './routes/clients.js'
 import brandsRoutes from './routes/brands.js'
+import unitsOfMeasureRoutes from './routes/unitsOfMeasure.js'
 
 const app = express(); //initializing
 
@@ -26,6 +27,7 @@ app.use('/roles', rolesRoutes);
 app.use('/restaurants', restaurantRoutes);
 app.use('/clients', clientRoutes);
 app.use('/brands', brandsRoutes);
+app.use('/unitsOfMeasure', unitsOfMeasureRoutes);
 
 //
 const CONNECTION_URL = 'mongodb+srv://dividucciAdmin:MFMDOmw59AM10gSB@cluster0.fiti5.mongodb.net/Divudicci?retryWrites=true&w=majority'
