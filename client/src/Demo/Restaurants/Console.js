@@ -51,7 +51,7 @@ class Console extends React.Component {
                                     <div className="col text-right">
                                         <h3>{element.name}</h3>
                                         <h5><span className="text-muted">Número de sillas : {element.chairs}</span></h5>
-                                        <h6> Status :<span className="text-muted" style= {{currentColor: element.busy ? 'red' :  'green'}}> {element.busy ? 'Ocupada' : 'Libre'}</span></h6>
+                                        <h6> Status :<span style={{color: element.busy ? 'red' :  'green'}}> {element.busy ? 'Ocupada' : 'Libre'}</span></h6>
                                     </div>
                                 </div>
                             </Card.Body>
@@ -88,7 +88,7 @@ class Console extends React.Component {
                                     <div className="col text-right">
                                         <h3>{element.name}</h3>
                                         <h5><span className="text-muted">Número de sillas : {element.chairs}</span></h5>
-                                        <h6> Status :<span className="text-muted" style= {{currentColor: element.busy ? 'red' :  'green'}}> {element.busy ? 'Abierta' : 'Cerrada'}</span></h6>
+                                        <h6> Status :<span style= {{color: !element.busy ? 'red' :  'green'}}> {element.busy ? 'Abierta' : 'Cerrada'}</span></h6>
                                     </div>
                                 </div>
                             </Card.Body>
@@ -176,7 +176,7 @@ class Console extends React.Component {
             .then((response) => {
                 // handle success
                 store.addNotification({
-                    title: "Barra" + status ? 'abierta' : 'cerrada' + "correctamente",
+                    title: status === true ? 'Barra abierta correctamente' : 'Barra cerrada correctamente',
                     message: "Puede continuar con sus gestiones",
                     type: "success",
                     insert: "top",

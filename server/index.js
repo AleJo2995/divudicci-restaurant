@@ -16,6 +16,7 @@ import buffeteRoutes from './routes/buffet.js'
 import tablesRoutes from './routes/tables.js'
 import cashiersRoutes from './routes/cashiers.js'
 import barsRoutes from './routes/bars.js'
+import productsRoutes from './routes/products.js'
 
 const app = express(); //initializing
 
@@ -36,6 +37,7 @@ app.use('/buffet', buffeteRoutes);
 app.use('/tables', tablesRoutes);
 app.use('/cashiers', cashiersRoutes);
 app.use('/bars', barsRoutes);
+app.use('/products', productsRoutes);
 
 //
 const CONNECTION_URL = 'mongodb+srv://dividucciAdmin:MFMDOmw59AM10gSB@cluster0.fiti5.mongodb.net/Divudicci?retryWrites=true&w=majority'

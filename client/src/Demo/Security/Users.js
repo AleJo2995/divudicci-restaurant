@@ -33,6 +33,7 @@ const initialState = {
     username:'',
     password : '',
     roles : [],
+    rolesToAdd:[],
     data : [], 
     code: ''
 };
@@ -80,9 +81,22 @@ class Users extends React.Component {
     createCheckItems() {
         let items = [];    
         this.state.roles.forEach((element, i) => {
-            items.push(<Form.Check id={i} lg={3} md={3} type="checkbox" onChange={ (e) => this.handleChange(e) } name={element.name} label={element.name} checked={false}/>);  
+            items.push(<Form.Check id={i} lg={3} md={3} type="checkbox" onChange={ (e) => this.addRolesToFinal(e) } name={element.name} label={element.name}/>);  
         });   
         return items;
+    }
+
+    addRolesToFinal(event){
+        const target = event.target;
+        let roles = [];
+        if(target.checked){
+            this.state.rolesToAdd.push(target.name)
+        } else {
+            const index = this.state.rolesToAdd.indexOf(target.name);
+            if (index > -1) {
+                this.state.rolesToAdd.splice(index, 1);
+            }
+        }
     }
 
     createUser() {
@@ -94,7 +108,7 @@ class Users extends React.Component {
             password: this.state.password,
             phoneNumber: this.state.phoneNumber,
             cellPhoneNumber: this.state.cellPhoneNumber,
-            roles: this.state.roles || [],
+            roles: this.state.rolesToAdd || [],
         };
 
         axios.get(this.state.configUrl + '/consecutives/get/lastConsecutive?code=USU-')
@@ -174,7 +188,7 @@ class Users extends React.Component {
             password: this.state.password,
             phoneNumber: this.state.phoneNumber,
             cellPhoneNumber: this.state.cellPhoneNumber,
-            roles: this.state.roles || [],
+            roles: this.state.rolesToAdd || [],
         };
 
         axios.patch(this.state.configUrl + '/users/edit/' + this.state.code, newUser)
