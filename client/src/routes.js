@@ -9,6 +9,7 @@ const DashboardDefault = React.lazy(() => import('./Demo/Dashboard/Default'));
 
 const UIBasicButton = React.lazy(() => import('./Demo/UIElements/Basic/Button'));
 const Users = React.lazy(() => import('./Demo/Security/Users'));
+const Cashiers = React.lazy(() => import('./Demo/Security/Cashiers'));
 const Consecutives = React.lazy(() => import('./Demo/Security/Consecutives'));
 const Countries = React.lazy(() => import('./Demo/Security/Countries'));
 const Roles = React.lazy(() => import('./Demo/Security/Roles'));
@@ -16,6 +17,7 @@ const UnitsOfMeasure = React.lazy(() => import('./Demo/Security/UnitsOfMeasure')
 const Restaurants = React.lazy(() => import('./Demo/Restaurants/Restaurants'));
 const Home = React.lazy(() => import('./Demo/Restaurants/Home'));
 const Buffet = React.lazy(() => import('./Demo/Administration/Buffet'));
+const Tables = React.lazy(() => import('./Demo/Administration/Tables'));
 const Console = React.lazy(() => import('./Demo/Restaurants/Console'));
 const Brands = React.lazy(() => import('./Demo/Providers/Brands'));
 const Providers = React.lazy(() => import('./Demo/Providers/Providers'));
@@ -64,6 +66,8 @@ const routes = [
     { path: '/restaurants/home', exact: true, name: 'Home', component: Home },
     { path: '/restaurants/console', exact: true, name: 'Console', component: Console },
     { path: '/administration/buffet', exact: true, name: 'Buffet', component: Buffet },
+    { path: '/cashiers', exact: true, name: 'Cashiers', component: Cashiers },
+    { path: '/tables', exact: true, name: 'Tables', component: Tables },
 ];
 
 export default routes;

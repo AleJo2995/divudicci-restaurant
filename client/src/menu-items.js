@@ -231,9 +231,9 @@ export default {
                         },
                         {
                             id: 'badges',
-                            title: 'Roles',
+                            title: 'Mesas',
                             type: 'item',
-                            url: '/roles'
+                            url: '/tables'
                         },
                         {
                             id: 'breadcrumb-pagination',

@@ -54,7 +54,7 @@ class Console extends React.Component {
                             <div className="row align-items-center justify-content-center card-active">
                                 <div className="col-12">
                                     <OverlayTrigger key={1} overlay={<Tooltip>{'Ingresar'}</Tooltip>}>
-                                        <Button className="col-12" variant={'outline-primary'}><Link to="/restaurants/console"> Ingresar </Link></Button>
+                                        <Button className="col-12" variant={'outline-primary'}><Link to={{pathname: `/restaurants/console`, query: {element} }} > Ingresar </Link></Button>
                                     </OverlayTrigger>
                                 </div>
                             </div>

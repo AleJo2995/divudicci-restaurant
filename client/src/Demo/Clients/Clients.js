@@ -34,7 +34,9 @@ const initialState = {
     restaurant:'',
     data : [], 
     code: '',
-    restaurants:[]
+    restaurants:[],
+    tableName:'',
+    table:''
 };
 
 class Clients extends React.Component {
@@ -58,7 +60,10 @@ class Clients extends React.Component {
         axios.get( this.state.configUrl + '/clients/')
             .then((response) => {
                 // handle success
-                this.setState({ data: response.data });
+                this.setState({ data: response.data, tableName: this.props.location.query ? this.props.location.query.element.name : '', 
+                                restaurant: this.props.location.query ? this.props.location.query.element.restaurant : '', 
+                                table: this.props.location.query ? this.props.location.query.element : ''});
+                
             })
             .catch(function (error) {
                 // handle error
@@ -83,6 +88,19 @@ class Clients extends React.Component {
         this.state.restaurants.forEach((element, i) => {
             items.push(<option key={i} value={element.name}>{element.name}</option>);  
         });   
+        return items;
+    }
+
+    createMenuOptions() {
+        let items = []; 
+        const chairs = this.state.table.chairs;
+        for (let i = 1; i <= chairs; i++) {
+            items.push(
+                        <Form.Control as="select"  placeholder="Elija restaurante" name="restaurant" onChange={ (e) => this.handleChange(e) }>
+                            {this.createSelectItems()}
+                        </Form.Control>);  
+            
+        }    
         return items;
     }
 
@@ -217,6 +235,8 @@ class Clients extends React.Component {
             })
     }
 
+
+
     getClientByCode (){
         axios.get(this.state.configUrl + '/clients/getClientByCode/' + this.state.code)
             .then((response) => {
@@ -275,9 +295,10 @@ class Clients extends React.Component {
     }
 
     render = () => {        
-        const {data, nameOfClient, amount, detail, reservation, bar, date, restaurant,  code, isBasic} = this.state;
+        const {data, nameOfClient, tableName, amount, detail, reservation, bar, date, restaurant,  code, isBasic} = this.state;
         const options = {
             filterType: 'checkbox',
+            rowsPerPage:5
         };
         const columns = [
             {
@@ -374,16 +395,17 @@ class Clients extends React.Component {
                         <h5>Administración de Clientes</h5>
                         <hr/>
                         <Tabs defaultActiveKey="home">
-                            <Tab eventKey="home" title="Crear cliente">
+                            <Tab eventKey="home" title="Pago">
                                 <Form>
                                     <Form.Group controlId="formBasicEmail">
                                         <Form.Label>Nombre</Form.Label>
                                         <Form.Control type="input" placeholder="Inserte nombre" name="nameOfClient" value={nameOfClient} onChange={ (e) => this.handleChange(e) } />
                                     </Form.Group>
                                     <Form.Group controlId="formBasicEmail">
-                                        <Form.Label>Cantidad</Form.Label>
-                                        <Form.Control type="input" placeholder="Inserte cantidad consumida" name="amount" value={amount} onChange={ (e) => this.handleChange(e) } />
+                                        <Form.Label>Nombre de la mesa</Form.Label>
+                                        <Form.Control type="input" disabled={true} placeholder="Inserte cantidad consumida" name="tableName" value={tableName} onChange={ (e) => this.handleChange(e) } />
                                     </Form.Group>
+                                    
                                     <Form.Group controlId="formBasicEmail">
                                         <Form.Label>Detalle</Form.Label>
                                         <Form.Control as="textarea" rows="3" placeholder="Inserte detalle" name="detail" value={detail} onChange={ (e) => this.handleChange(e) } />
@@ -400,9 +422,13 @@ class Clients extends React.Component {
                                     </Form.Group>
                                     <Form.Group controlId="formBasicEmail">
                                         <Form.Label>Restaurant</Form.Label>
-                                        <Form.Control as="select" placeholder="Elija restaurante" name="restaurant" value={restaurant} onChange={ (e) => this.handleChange(e) }>
+                                        <Form.Control as="select" disabled={true} placeholder="Elija restaurante" name="restaurant" value={restaurant} onChange={ (e) => this.handleChange(e) }>
                                             {this.createSelectItems()}
                                         </Form.Control>
+                                    </Form.Group>
+                                    <Form.Group controlId="formBasicEmail">
+                                        <Form.Label>Total a Pagar</Form.Label>
+                                        <Form.Control type="input" placeholder="Inserte cantidad consumida" name="amount" value={amount} onChange={ (e) => this.handleChange(e) } />
                                     </Form.Group>
                                     <Button variant="primary" onClick={() => this.createClient()}>
                                         Crear
@@ -442,7 +468,7 @@ class Clients extends React.Component {
                                                 </Form.Group>
                                                 <Form.Group controlId="formBasicEmail">
                                                     <Form.Label>Restaurant</Form.Label>
-                                                    <Form.Control as="select" placeholder="Elija restaurante" name="restaurant" value={restaurant} onChange={ (e) => this.handleChange(e) }>
+                                                    <Form.Control as="select"  placeholder="Elija restaurante" name="restaurant" value={restaurant} onChange={ (e) => this.handleChange(e) }>
                                                         {this.createSelectItems()}
                                                     </Form.Control>
                                                 </Form.Group>
