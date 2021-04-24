@@ -235,6 +235,12 @@ export default {
                             type: 'item',
                             url: '/tables'
                         },
+                        {
+                            id: 'badges',
+                            title: 'Barras',
+                            type: 'item',
+                            url: '/bars'
+                        },
                     ]
                 },
                 {

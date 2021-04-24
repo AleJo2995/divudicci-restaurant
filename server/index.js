@@ -15,6 +15,7 @@ import unitsOfMeasureRoutes from './routes/unitsOfMeasure.js'
 import buffeteRoutes from './routes/buffet.js'
 import tablesRoutes from './routes/tables.js'
 import cashiersRoutes from './routes/cashiers.js'
+import barsRoutes from './routes/bars.js'
 
 const app = express(); //initializing
 
@@ -34,6 +35,7 @@ app.use('/unitsOfMeasure', unitsOfMeasureRoutes);
 app.use('/buffet', buffeteRoutes);
 app.use('/tables', tablesRoutes);
 app.use('/cashiers', cashiersRoutes);
+app.use('/bars', barsRoutes);
 
 //
 const CONNECTION_URL = 'mongodb+srv://dividucciAdmin:MFMDOmw59AM10gSB@cluster0.fiti5.mongodb.net/Divudicci?retryWrites=true&w=majority'

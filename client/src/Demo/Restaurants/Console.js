@@ -20,6 +20,7 @@ const initialState = {
     restaurantName:'',
     openingAmount:'',
     registryDate:'',
+    bars:[]
 };
 
 class Console extends React.Component {
@@ -33,6 +34,7 @@ class Console extends React.Component {
     componentDidMount(){
         this.getRestaurantByName();
         this.loadTablesByRestaurant();
+        this.loadBarsByRestaurant();
     }
 
     renderDynamicCards(){
@@ -57,7 +59,45 @@ class Console extends React.Component {
                                 <div className="row align-items-center justify-content-center card-active">
                                     <div className="col-12">
                                         <OverlayTrigger key={1} overlay={<Tooltip>{'Ocupar'}</Tooltip>}>
-                                            <Button className="col-12" variant={'outline-secondary'} disabled={element.busy ? element.busy : false } onClick={() => this.useTable(element.code)}><Link to="/restaurants/console"> Ocupar </Link></Button>
+                                            <Button className="col-12" variant={'outline-secondary'} disabled={element.busy ? element.busy : false } onClick={() => this.useTable(element.code)}><Link to="/restaurants/console" > Ocupar </Link> </Button>
+                                        </OverlayTrigger>
+                                        <OverlayTrigger key={2} overlay={<Tooltip>{'Ingresar'}</Tooltip>}>
+                                            <Button className="col-12" variant={'outline-primary'}><Link to="/clients" to={{pathname: `/clients`, query: {element} }}> Pagar </Link></Button>
+                                        </OverlayTrigger>
+                                    </div>
+                                </div>
+                            </Card.Body>
+                    </Card>
+                    </Col>
+                );  
+        });
+        return items;
+    }
+
+    renderDynamicBars(){
+        let items = [];    
+        this.state.bars.forEach((element, i) => {
+                items.push(
+                    <Col md={12} xl={12}>
+                        <Card className='card-social' l={12} md={12} xl={12}>
+                            <Card.Body className='border-bottom'>
+                                <div className="row align-items-center justify-content-center">
+                                    <div className="col-auto">
+                                        <RestaurantMenuIcon fontSize="large" />
+                                    </div>
+                                    <div className="col text-right">
+                                        <h3>{element.name}</h3>
+                                        <h5><span className="text-muted">Número de sillas : {element.chairs}</span></h5>
+                                        <h6> Status :<span className="text-muted" style= {{currentColor: element.busy ? 'red' :  'green'}}> {element.busy ? 'Abierta' : 'Cerrada'}</span></h6>
+                                    </div>
+                                </div>
+                            </Card.Body>
+                            <Card.Body>
+                                <div className="row align-items-center justify-content-center card-active">
+                                    <div className="col-12">
+                                        <OverlayTrigger key={1} overlay={<Tooltip>{'Abrir'}</Tooltip>}>
+                                            <Button className="col-12" variant={'outline-secondary'}  onClick={() => this.useBar(element.code, element.busy ? false : true)}> {element.busy ? 'Cerrar' : 'Abrir'} </Button>
+                                            
                                         </OverlayTrigger>
                                         <OverlayTrigger key={2} overlay={<Tooltip>{'Ingresar'}</Tooltip>}>
                                             <Button className="col-12" variant={'outline-primary'}><Link to="/clients" to={{pathname: `/clients`, query: {element} }}> Pagar </Link></Button>
@@ -85,6 +125,20 @@ class Console extends React.Component {
             })
     }
 
+    loadBarsByRestaurant(name) {
+        const restaurantName = name !== undefined && name !== null ? name : (this.props.location.query ? this.props.location.query.element.name : 'Piccola Stella');
+        axios.get( this.state.configUrl + '/bars/getBarsByRestaurant/' + restaurantName)
+            .then((response) => {
+                // handle success
+                this.setState({ bars : response.data});
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+    }
+
+
     useTable(code) {
         const tableToEdit = {
             busy:true
@@ -106,6 +160,36 @@ class Console extends React.Component {
                     }
                   });
                 this.loadTablesByRestaurant(this.state.restaurant.name);
+                this.loadBarsByRestaurant(this.state.restaurant.name);
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+    }
+
+    useBar(code, status) {
+        const tableToEdit = {
+            busy:status
+        };
+        axios.patch( this.state.configUrl + '/bars/edit/' + code, tableToEdit )
+            .then((response) => {
+                // handle success
+                store.addNotification({
+                    title: "Barra" + status ? 'abierta' : 'cerrada' + "correctamente",
+                    message: "Puede continuar con sus gestiones",
+                    type: "success",
+                    insert: "top",
+                    container: "top-right",
+                    animationIn: ["animate__animated", "animate__fadeIn"],
+                    animationOut: ["animate__animated", "animate__fadeOut"],
+                    dismiss: {
+                      duration: 2000,
+                      onScreen: true
+                    }
+                  });
+                this.loadTablesByRestaurant(this.state.restaurant.name);
+                this.loadBarsByRestaurant(this.state.restaurant.name);
             })
             .catch(function (error) {
                 // handle error
@@ -246,7 +330,9 @@ class Console extends React.Component {
                                 </Row>
                             </Tab>
                             <Tab eventKey="profile" title="Barras">
-                            
+                                <Row>
+                                {this.renderDynamicBars()}
+                                </Row>
                             </Tab>
                         </Tabs>
                     </Col>
