@@ -91,23 +91,35 @@ class Clients extends React.Component {
         return items;
     }
 
-    createMenuOptions() {
-        let items = []; 
-        const chairs = this.state.table.chairs;
-        for (let i = 1; i <= chairs; i++) {
-            items.push(
-                        <Form.Control as="select"  placeholder="Elija restaurante" name="restaurant" onChange={ (e) => this.handleChange(e) }>
-                            {this.createSelectItems()}
-                        </Form.Control>);  
-            
-        }    
-        return items;
+    freeTable(){
+        const table = {
+            busy:false
+        }
+        axios.patch(this.state.configUrl + '/tables/edit/' + this.state.table.code, table)
+            .then((response) => {
+                store.addNotification({
+                    title: "La mesa ha sido liberada",
+                    message: "Puede continuar con sus gestiones",
+                    type: "info",
+                    insert: "top",
+                    container: "top-right",
+                    animationIn: ["animate__animated", "animate__fadeIn"],
+                    animationOut: ["animate__animated", "animate__fadeOut"],
+                    dismiss: {
+                      duration: 5000,
+                      onScreen: true
+                    }
+                  });
+            }).catch((error) => {
+                console.log(error);
+            });
     }
 
     createClient() {
         const newClient = {
             name:this.state.nameOfClient,
             amount:this.state.amount,
+            tableName:this.state.tableName,
             detail:this.state.detail,
             reservation:this.state.reservation,
             bar:this.state.bar,
@@ -158,9 +170,9 @@ class Clients extends React.Component {
                           onScreen: true
                         }
                       });
-                      this.resetState();
                       this.loadClients();
-
+                      this.freeTable();
+                      this.resetState();
                   }).catch((error) => {
                     store.addNotification({
                         title: "Error al crear el cliente",
@@ -187,6 +199,7 @@ class Clients extends React.Component {
         const newClient = {
             name:this.state.nameOfClient,
             amount:this.state.amount,
+            tableName:this.state.tableName,
             detail:this.state.detail,
             reservation:this.state.reservation,
             bar:this.state.bar,
@@ -235,8 +248,6 @@ class Clients extends React.Component {
             })
     }
 
-
-
     getClientByCode (){
         axios.get(this.state.configUrl + '/clients/getClientByCode/' + this.state.code)
             .then((response) => {
@@ -259,6 +270,7 @@ class Clients extends React.Component {
                     amount : response.data.amount,
                     detail: response.data.detail,
                     reservation: response.data.reservation,
+                    tableName:this.state.tableName,
                     bar: response.data.bar,
                     date: response.data.date,
                     restaurant: response.data.restaurant,
@@ -431,11 +443,11 @@ class Clients extends React.Component {
                                         <Form.Control type="input" placeholder="Inserte cantidad consumida" name="amount" value={amount} onChange={ (e) => this.handleChange(e) } />
                                     </Form.Group>
                                     <Button variant="primary" onClick={() => this.createClient()}>
-                                        Crear
+                                        Pagar
                                     </Button>
                                 </Form>
                             </Tab>
-                            <Tab eventKey="profile" title="Editar Cliente">
+                            <Tab eventKey="profile" title="Edición de Pago">
                             <Form>
                                             <Form.Group controlId="formBasicEmail">
                                                 <Form.Label>Código</Form.Label>

@@ -54,7 +54,8 @@ class SignUp1 extends React.Component {
                           onScreen: true
                         }
                       });
-                    this.setState({redirect:true});
+                     this.setState({redirect:true});
+                    //this.props.history.pushState(null, 'login')
                 } else if (response.status === 500) {
                     store.addNotification({
                         title: "Error al intentar loguear el usuario",
@@ -130,18 +131,11 @@ class SignUp1 extends React.Component {
                                 <div className="input-group mb-4">
                                     <input type="password" className="form-control" placeholder="password" name="password" value={password} onChange={ (e) => this.handleChange(e) }/>
                                 </div>
-                                <div className="form-group text-left">
-                                    <div className="checkbox checkbox-fill d-inline">
-                                        <input type="checkbox" name="checkbox-fill-1" id="checkbox-fill-a1" />
-                                            <label htmlFor="checkbox-fill-a1" className="cr"> Save credentials</label>
-                                    </div>
-                                </div>
                                 <button className="btn btn-primary shadow-2 mb-4" onClick={() => this.validateUserLogin()}>Login</button>
-                                <p className="mb-2 text-muted">Forgot password? <NavLink to="/auth/reset-password-1">Reset</NavLink></p>
                             </div>
                         </div>
                     </div>
-                    {redirect ? <Redirect to='/default/dashboard'/> : null} 
+                    {redirect ? <Redirect to='/dashboard/default'/> : null} 
                 </div>
             </Aux>
         );

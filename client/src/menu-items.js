@@ -235,30 +235,6 @@ export default {
                             type: 'item',
                             url: '/tables'
                         },
-                        {
-                            id: 'breadcrumb-pagination',
-                            title: 'Consecutivos',
-                            type: 'item',
-                            url: '/consecutives'
-                        },
-                        {
-                            id: 'collapse',
-                            title: 'Países',
-                            type: 'item',
-                            url: '/countries'
-                        },
-                        {
-                            id: 'tabs-pills',
-                            title: 'Unidades de Medida',
-                            type: 'item',
-                            url: '/basic/tabs-pills'
-                        },
-                        {
-                            id: 'typography',
-                            title: 'Países',
-                            type: 'item',
-                            url: '/basic/typography'
-                        }
                     ]
                 },
                 {
@@ -269,39 +245,15 @@ export default {
                     children: [
                         {
                             id: 'button',
-                            title: 'Usuarios',
+                            title: 'Facturación',
                             type: 'item',
-                            url: '/users'
+                            url: '/cashiers'
                         },
                         {
                             id: 'badges',
-                            title: 'Roles',
+                            title: 'Clientes',
                             type: 'item',
-                            url: '/basic/badges'
-                        },
-                        {
-                            id: 'breadcrumb-pagination',
-                            title: 'Consecutivos',
-                            type: 'item',
-                            url: '/consecutives'
-                        },
-                        {
-                            id: 'collapse',
-                            title: 'Países',
-                            type: 'item',
-                            url: '/countries'
-                        },
-                        {
-                            id: 'tabs-pills',
-                            title: 'Unidades de Medida',
-                            type: 'item',
-                            url: '/basic/tabs-pills'
-                        },
-                        {
-                            id: 'typography',
-                            title: 'Países',
-                            type: 'item',
-                            url: '/basic/typography'
+                            url: '/clients'
                         }
                     ]
                 }

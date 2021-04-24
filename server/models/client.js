@@ -8,7 +8,8 @@ const clientSchema = mongoose.Schema({
     date:String,
     reservation:Boolean,
     bar:Boolean,
-    restaurant:String
+    restaurant:String,
+    tableName:String
 });
 
 const client = mongoose.model('client', clientSchema, 'client');
