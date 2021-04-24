@@ -44,7 +44,7 @@ export const login = async (req, res) => {
     const query = {'userName': req.body.userName};
     try {
         const user = await User.findOne(query);
-        if(user.password = req.body.password){
+        if(user.password === req.body.password){
             res.status(200).json(user);
         } else {
             res.status(500).json(user);

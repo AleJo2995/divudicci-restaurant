@@ -262,6 +262,20 @@ export default {
                             url: '/clients'
                         }
                     ]
+                },
+                {
+                    id: 'basic7',
+                    title: 'Ayuda',
+                    type: 'collapse',
+                    icon: 'feather icon-box',
+                    children: [
+                        {
+                            id: 'button',
+                            title: 'Módulo de ayuda',
+                            type: 'item',
+                            url: '/help'
+                        }
+                    ]
                 }
 
 

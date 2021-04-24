@@ -78,7 +78,7 @@ class SignUp1 extends React.Component {
                   }).catch((error) => {
                     store.addNotification({
                         title: "Error al intentar loguear el usuario",
-                        message: error.message,
+                        message: "Revise los datos del usuario",
                         type: "danger",
                         insert: "top",
                         container: "top-right",

@@ -22,6 +22,7 @@ const Bars = React.lazy(() => import('./Demo/Administration/Bars'));
 const Console = React.lazy(() => import('./Demo/Restaurants/Console'));
 const Brands = React.lazy(() => import('./Demo/Providers/Brands'));
 const Products = React.lazy(() => import('./Demo/Providers/Products'));
+const Help = React.lazy(() => import('./Demo/Help/Help'));
 const Providers = React.lazy(() => import('./Demo/Providers/Providers'));
 const Clients = React.lazy(() => import('./Demo/Clients/Clients'));
 const UIBasicBadges = React.lazy(() => import('./Demo/UIElements/Basic/Badges'));
@@ -72,6 +73,7 @@ const routes = [
     { path: '/tables', exact: true, name: 'Tables', component: Tables },
     { path: '/bars', exact: true, name: 'Bars', component: Bars },
     { path: '/products', exact: true, name: 'Products', component: Products },
+    { path: '/help', exact: true, name: 'Help', component: Help },
 ];
 
 export default routes;
