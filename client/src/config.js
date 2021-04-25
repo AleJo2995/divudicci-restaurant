@@ -1,6 +1,6 @@
 export default {
-    defaultPath: '/dashboard/default',
-    basename: '/datta-able/react/default', // only at build time to set, like /datta-able
+    defaultPath: '/auth/signin-1',
+    basename: '/divudicci', // only at build time to set, like /datta-able
     layout: 'vertical', // vertical, horizontal (not available in lite version)
     preLayout: null, // (not available in lite version)
     collapseMenu: false, // mini-menu
@@ -22,4 +22,5 @@ export default {
     configBlock: false, // not available in lite version
     layout6Background : 'linear-gradient(to right, #A445B2 0%, #D41872 52%, #FF0066 100%)', // used only for pre-layout = layout-6
     layout6BackSize : '', // used only for pre-layout = layout-6
+    SERVER_URL: 'http://localhost:5000'
 };
